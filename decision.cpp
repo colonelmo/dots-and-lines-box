@@ -152,7 +152,7 @@ public:
         return getHoriz() == b.getHoriz() && getVert() == b.getVert();
     }
 
-    void out(){
+    void out()const{
         vector<string> toOut; 
         for(int i = 0 ;i <numRows ; i++){
             string theRow = ".";
@@ -218,6 +218,19 @@ public:
 
     bool isInside(int r, int c)const {
         return r >= 0 && r < numRows && c >= 0 && c < numCols;
+    }
+    
+    bool isDone()const{
+        for(int i = 0 ;i< numRows; i ++){
+            for(int j = 0 ;j < numCols ; j++){
+                 for(int s = 0 ;s < 4 ; s++){
+                    if(!getBox(i, j, Side(s)) && safeToDraw(i, j, Side(s))){
+                        return false;
+                    }
+                 }
+            }
+        }
+        return true;
     }
 
     bool isDone(Move& m)const{
@@ -304,30 +317,61 @@ public:
         }
         return ret;
     }
+
+    Board minify()const{
+        Board ret = *this;
+        for(int i = 0 ;i < 2 ; i++){
+            for(int j=0 ; j < 2;  j++){
+                Board now = *this;
+                if(i){
+                    now = now.getMirrorVertical();
+                }
+                if(j){
+                    now = now.getMirrorHorizontal();
+                }
+                for(int k = 0 ;k < 4 ;k ++){
+                    ret = min(ret, now);
+                    now= now.getRotateRight();
+                }
+            }
+        }
+        return ret;
+    }
 };
+
+map<Board, int> mp;
+
+void go(Board b){
+    b = b.minify(); 
+    if(mp.find(b) != mp.end()){
+        return;
+    }
+    mp[b] = 1;
+    if(b.isDone()){
+        return;
+    }
+    int n = b.getNumRows();
+    int m = b.getNumCols();
+    for(int i = 0 ;i < n ; i++){
+        for(int j = 0 ;j < m ; j++){
+            for(int k = 0 ; k < 4 ; k++){
+                if(!b.getBox(i, j, Side(k))){
+                    b.setBox(i, j, Side(k), 1);
+                    go(b); 
+                    b.setBox(i, j, Side(k), 0);
+                }
+            }
+        }
+    }
+}
 
 int main(){
     srand(123123156);
-    Board b(4, 2);
-    for(int i = 0 ; i <4 ; i ++){
-        b.setBox(abs(rand())%4, abs(rand())%2,Side(abs(rand())%4), 1);
-    }
-    b.out();
-    cout << endl;
-
-    b= b.getMirrorVertical();
-    b.out();
-    cout << endl;
-    b= b.getMirrorVertical();
-    b.out();
-    cout << endl;
-
-    b=b.getMirrorHorizontal();
-    b.out();
-    cout << endl;
-    b=b.getMirrorHorizontal();
-    b.out();
-    cout << endl;
-
+    Board b(3, 3);
+    go(b); 
+    cout <<mp.size() << endl;
     return 0;
 }
+
+
+
