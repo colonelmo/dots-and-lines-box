@@ -365,9 +365,30 @@ void go(Board b){
     }
 }
 
+// game is 1 2 3 4, starting from left, clockwise
+// game is 2 3 4 1, starting form up   , clockwise
+// mine is 0 1 2 3 , starting from up  , clockwise
+
+int gameSideToMe(int side){
+    return (side -2 + 4)%4;
+}
+
+int mySideToGame(int side){
+    if(side == 0){
+        return 2;
+    }
+    if(side== 1){
+        return 3;
+    }
+    if(side == 2){
+        return 4;
+    }
+    return 1;
+}
+
 int main(){
     srand(123123156);
-    Board b(3, 3);
+    Board b(2, 4);
     go(b); 
     cout <<mp.size() << endl;
     return 0;
