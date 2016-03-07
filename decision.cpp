@@ -441,7 +441,7 @@ public:
 
     int dfs2(int i, int j , int sideDad, int vis[][20], int & is)const{
         int ret = 0;
-        if(vis[i][j] || !isInside(i, j)){
+        if(vis[i][j] || !isInside(i, j) || getEmpties(i, j).size() > 2){
             return ret;
         }
         vis[i][j] = 1;
@@ -876,7 +876,7 @@ int main(){
             int mys = gameSideToMe(s);
             b.setBox(r, c, Side(mys),1);
         }
-//        b.out();
+        b.out();
     }
     return 0;
 }
