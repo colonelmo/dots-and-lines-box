@@ -1,3 +1,5 @@
+//compile with g++ -std=c++11
+
 #include <bits/stdc++.h>
 
 using namespace std;
