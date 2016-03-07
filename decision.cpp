@@ -856,7 +856,7 @@ Move play(const Board& b, int depth){
 }
 
 int main(){
-    srand(123123123);
+    srand(time(0));
     int rows, cols, turn;
     cin >> rows >> cols >> turn;
     int r, c, s;
