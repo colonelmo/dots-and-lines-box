@@ -11,9 +11,9 @@ g++ decision.cpp
 
 ## Use
 After running the program, input `numer of rows`, `number of columns`,
-and `whose turn it is (currently the third integer is unused).
+and `whose turn it is` (currently the third integer is unused).
 
-From now on, you get to choose who should play. If you want to play, you input three numbers, corresponding to the row and column of the box, and the which of its surrounding box you want to draw (0 for bottom, 1 for left, 2 for top, and three for right). If you want the computer to play, input three numbers with the first of them being -1.
+From now on, you get to choose who should play. If you want to play, you input three numbers, corresponding to the row and column of the box, and the which of its surrounding box you want to draw (0 for bottom, 1 for left, 2 for top, and 3 for right). If you want the computer to play, input three numbers with the first of them being -1.
 
 ## Example run
 ```
@@ -42,7 +42,7 @@ The computer outputs:
 ```
 Meaning it had played the move 2 3 2 (row 2, col 3, top side)
 
-Now I choose to play on the opposeit side:
+Now I choose to play on the opposite side:
 ```
 >>> 0 0 1
 ```
