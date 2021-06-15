@@ -298,9 +298,10 @@ public:
         }
         toOut.push_back(theRow);
         for(auto it : toOut){
-            cout << it << endl;
+            cerr << it << endl;
         }
-        cout << endl ;
+        cerr << endl ;
+        cerr << "fin" << endl;
     }
   
     vector<pair<int, int> > getCShaped() const{
