@@ -19,7 +19,8 @@ class Player:
         pass
 
     def finish(self, result):
-        print(self.ch, result)
+        pass
+        # print(self.ch, result)
 
 
 class RLPlayer(Player):
@@ -127,9 +128,9 @@ class RandomPlayer(Player):
 
 
 class Dots:
-    def __init__(self, w, h):
-        self.w = w
+    def __init__(self, h, w):
         self.h = h
+        self.w = w
         self.rounds = 0
 
         self.dr = [1, 0, -1, 0]
@@ -137,7 +138,7 @@ class Dots:
         self.ch = ['_', '|', '_', '|']
 
         self.grid = [[' ' for _ in range(self.w * 2 + 1)] for ii in range(self.h * 2 + 1)]
-        print(len(self.grid), len(self.grid[0]))
+        # print(len(self.grid), len(self.grid[0]))
         for i in range(0, len(self.grid), 2):
             for j in range(0, len(self.grid[0]), 2):
                 self.grid[i][j] = '.'
@@ -159,14 +160,21 @@ class Dots:
                 if not self.place(r, c, k, players[now].ch):
                     now += 1
                     now %= n
+                self.current_result = {p.ch: 0 for p in players}
+                symbols = [p.ch for p in players]
+                for row in self.grid:
+                    for elem in row:
+                        if elem in symbols:
+                            self.current_result[elem] += 1
                 for p in players:
                     p.update(r, c, k, self)
             except RuntimeError as e:
+                # print("bad: ", e)
                 default_result[players[now].ch] = 0
                 for p in players:
                     p.finish(default_result)
                 return default_result
-            self.print()
+            # self.print()
 
         default_result = {p.ch: 0 for p in players}
         symbols = [p.ch for p in players]
@@ -176,7 +184,7 @@ class Dots:
                     default_result[elem] += 1
         for p in players:
             p.finish(default_result)
-        print("!! ", self.to_fill)
+        # print("!! ", self.to_fill)
         return default_result
 
     def place(self, r, c, k, symbol):
